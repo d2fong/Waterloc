@@ -40,7 +40,6 @@ var ModelModule = (function() {
 
   var BuildingModel = function(name, id, code, altNames, lat, long) {
     AbstractModel.apply(this, arguments);
-    var self = ths;
     this.name = name;
     this.id = id;
     this.code = code;
@@ -67,7 +66,6 @@ var ModelModule = (function() {
 
   var BuildingListModel = function() {
     AbstractModel.apply(this, arguments);
-    var self = this;
     this.buildings = [];
   };
 

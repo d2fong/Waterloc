@@ -43,9 +43,9 @@ var ViewModule = (function(BuildingModel) {
     //  });
     //},
     update: function(event) {
-      if (event.event == BUILDING_SHOW) {
+      if (event.event == ModelModule.BUILDING_SHOW) {
         // update the list of buildings panel and highlight the corresponding building
-      } else if (event.event == BUILDING_HIDE) {
+      } else if (event.event == ModelModule.BUILDING_HIDE) {
         // update the list of buildings panel and un-highlight the corresponding building
       }
     }
@@ -56,6 +56,8 @@ var ViewModule = (function(BuildingModel) {
     this.setMapModel(model.mapModel);
     this.setBuildingListModel(model.buildingListModel);
     this.setService(UWaterlooService);
+
+
   };
 
   _.extend(MapView.prototype, {

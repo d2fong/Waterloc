@@ -39,6 +39,32 @@ var data = {
     var buildingsListView = new ViewModule.BuildingListView(buildingsListModel, uWService);
     var mapView = new ViewModule.MapView(model, uWService);
 
+    var initializeMap = function(DCResponseData) {
+        var lat = DCResponseData.latitude;
+        var lng = DCResponseData.longitude;
+        mapView.getMapModel().setCenter(new google.maps.LatLng(lat, lng));
+        mapView.getMapModel().setZoom(15);
+    };
+
+    mapView.getService().getBuilding("DC", initializeMap);
+
+
+    var initializeBuildings = function(buildingListData) {
+        _.each(buildingListData, function (building) {
+            var data = {
+                'name': building.building_name,
+                'id': building.id,
+                'code': building.building_code,
+                'altNames': building.alternate_names,
+                'lat': building.latitude,
+                'lng': building.longitutde
+            };
+            buildingsListModel.addBuilding(new ModelModule.BuildingModel(data.name, data.id, data.code, data.altNames, data.latitude, data.longitude));
+
+        });
+    };
+
+    buildingsListView.getService().queryBuildings(initializeBuildings);
 
 
 
