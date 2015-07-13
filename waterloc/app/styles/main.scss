@@ -4,3 +4,19 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 // endbower
 
 /* Write your additonal styles below */
+
+body {
+  height:1200px;
+  width: 1200px;
+}
+
+#map-canvas {
+  width:100%;
+  height: 100%;
+  background-color: #CCC;
+}
+
+#container {
+  width: 1200px;
+  height: 1200px;
+}
