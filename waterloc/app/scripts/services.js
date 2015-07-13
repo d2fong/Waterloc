@@ -30,9 +30,10 @@ var ServiceModule = (function() {
           url: getBuildingListUrl(this.urlPrefix,this.apiKey)
         }).success(function(response) {
           cache.building_list = response['data'];
-          callback(response);
+          callback(response['data']);
           return response['data'];
         }).error(function() {
+          console.log("ERROR GETTING UW BUILDINGS DATA");
           return undefined;
         });
       }
@@ -48,10 +49,10 @@ var ServiceModule = (function() {
           url: getBuildingCodeUrl(this.urlPrefix, buildingCode, this.apiKey)
         }).success(function(response) {
           cache.buildingCode = response['data'];
-          callback(response);
+          callback(response['data']);
           return response;
         }).error(function() {
-          console.log("ERROR");
+          console.log("ERROR GETTING UW DATA FOR BUILDING " + buildingCode);
           return undefined;
         });
       }

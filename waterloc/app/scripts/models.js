@@ -94,6 +94,11 @@ var ModelModule = (function() {
 
   return {
     BuildingModel: BuildingModel,
-    BuildingListModel: BuildingListModel
+    BuildingListModel: BuildingListModel,
+    BUILDING_CLICKED: BUILDING_CLICKED,
+    BUILDING_SHOW: BUILDING_SHOW,
+    BUILDING_HIDE: BUILDING_HIDE,
+    BUILDING_ADDED: BUILDING_ADDED,
+    BUILDING_REMOVED: BUILDING_REMOVED
   };
 })();
