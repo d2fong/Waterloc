@@ -18,7 +18,8 @@
   "smarttabs": true,
   "jquery": true,
   "predef": ["_", "Q"],
-  "globals": {"ViewModule": true, 
+  "globals": {"SecretsModule": true,
+              "ViewModule": true,
               "ModelModule": true, 
               "ServiceModule": true,
               "google": true

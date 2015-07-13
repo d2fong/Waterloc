@@ -5,9 +5,9 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 
 /* Write your additonal styles below */
 
-body {
-  height:1200px;
-  width: 1200px;
+html, body {
+  height: 100%;
+  width: 100%;
 }
 
 #map-canvas {
@@ -17,6 +17,6 @@ body {
 }
 
 #container {
-  width: 1200px;
-  height: 1200px;
+  width: 100%;
+  height: 100%;
 }
