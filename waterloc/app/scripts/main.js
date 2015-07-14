@@ -34,7 +34,6 @@ var data = {
 
 
     var buildingsListPanel = document.getElementById('building-list-entries');
-    console.log(buildingsListPanel);
     var buildingsListView = new ViewModule.BuildingListView(buildingsListModel, uWService);
     buildingsListView.setBuildingListPanel(buildingsListPanel);
     var mapView = new ViewModule.MapView(model, uWService);
@@ -59,9 +58,13 @@ var data = {
             'code': building.building_code,
             'altNames': building.alternate_names,
             'lat': building.latitude,
-            'lng': building.longitutde
+            'lng': building.longitude
           };
-          buildingsListModel.addBuilding(new ModelModule.BuildingModel(data.name, data.id, data.code, data.altNames, data.latitude, data.longitude));
+          if ((data.lat != null) && (data.lng != null)) {
+            var b = new ModelModule.BuildingModel(data.name,
+              data.id, data.code, data.altNames, data.lat, data.lng);
+            buildingsListModel.addBuilding(b);
+          }
         });
 
           callback();
@@ -72,10 +75,25 @@ var data = {
 
     };
 
-    var appLoop = function () {
+    var controllerInit = function () {
+        $('.building-entry').children('input').change(function() {
+          if ($(this).is(':checked')) {
+            $(this).parent()[0].className = 'list-group-item building-entry ' + 'selected';
+            var code = $(this).attr('id');
+            var b = buildingsListModel.getBuilding(code);
+            b.update(ModelModule.BUILDING_SHOW);
+
+          } else {
+            $(this).parent()[0].className = 'list-group-item building-entry';
+            var code = $(this).attr('id');
+            var b = buildingsListModel.getBuilding(code);
+            b.update(ModelModule.BUILDING_HIDE);
+
+          }
+        });
     };
 
-    init(appLoop);
+    init(controllerInit);
 
     // Add jquery controls here
     // pseduo code for updating a model

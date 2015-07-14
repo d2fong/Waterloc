@@ -21,9 +21,9 @@ var ModelModule = (function () {
         },
 
         notify: function (event) {
-            _.each(this.listeners, function (listener) {
+          _.each(this.listeners, function (listener) {
                 // The view will be the primary listener to each graph node, hence we call its update function when this model changes
-                listener.update(event);
+              listener.update(event);
             });
         },
 
@@ -39,28 +39,44 @@ var ModelModule = (function () {
     var BUILDING_REMOVED = 'BUILDING_REMOVED';
 
     var BuildingModel = function (name, id, code, altNames, lat, long) {
-        AbstractModel.apply(this, arguments);
+        var self = this;
+        this.listeners = [];
         this.name = name;
         this.id = id;
         this.code = code;
         this.altNames = altNames;
         this.lat = lat;
-        this.long = long;
+        this.lng = long;
         this.isSelected = false;
     };
 
-    _.extend(BuildingModel.prototype, AbstractModel.prototype, {
+    _.extend(BuildingModel.prototype, {
         update: function (event) {
-            if (event == BUILDING_CLICKED) {
-                if (this.isSelected == false) {
-                    this.isSelected = true;
-                    this.notfiy({'building': self, 'event': BUILDING_SHOW});
-                } else {
-                    this.isSelected = false;
-                    this.notify({'building': self, 'event': BUILDING_HIDE});
-                }
-            }
+          if (event == BUILDING_SHOW) {
+            this.isSelected = true;
+            this.notify({'building': this, 'event': BUILDING_SHOW});
+          } else if (event == BUILDING_HIDE) {
+            this.isSelected = false;
+            this.notify({'building': this, 'event': BUILDING_HIDE});
+          }
+        },
+      addListener: function (listener) {
+        if (_.indexOf(this.listeners, listener) == -1) {
+          this.listeners.push(listener);
         }
+      },
+
+      removeListener: function (listener) {
+        this.listeners = _.without(this.listeners, listener);
+      },
+
+      notify: function (event) {
+        _.each(this.listeners, function (listener) {
+          // The view will be the primary listener to each graph node, hence we call its update function when this model changes
+          listener.update(event);
+        });
+      }
+
     });
 
 
@@ -72,7 +88,7 @@ var ModelModule = (function () {
     _.extend(BuildingListModel.prototype, AbstractModel.prototype, {
         addBuilding: function (building) {
             if (_.indexOf(this.buildings, building) == -1) {
-                building.addListener(self);
+                building.addListener(this);
                 this.buildings.push(building);
                 this.notify({'building': building, 'event': BUILDING_ADDED});
             }
@@ -80,14 +96,21 @@ var ModelModule = (function () {
         removeBuilding: function (building) {
             var index = _.indexOf(this.buildings, building);
             if (index > -1) {
-                this.buildings[index].removeListener(self);
+                this.buildings[index].removeListener(this);
                 this.buildings = _.without(this.buildings, this.buildings[index]);
                 this.notify({'building': building, 'event': BUILDING_REMOVED});
             }
         },
         update: function (event) {
             this.notify(event);
+        },
+      getBuilding: function(code) {
+        var b = _.findWhere(this.buildings, {'code': code});
+        if (b < 0) {
+          return null;
         }
+        return b;
+      }
     });
 
     return {
