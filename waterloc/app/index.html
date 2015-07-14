@@ -17,7 +17,7 @@
     <!-- build:js scripts/vendor/modernizr.js -->
     <script src="bower_components/modernizr/modernizr.js"></script>
     <!-- endbuild -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApe4fRRRFP5gGcxOHWEe-ZIcbQAp_VjqY"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBDhgkwJuZet5VduQly6Gy17wir9dGOr50"></script>
   </head>
   <body>
     <!--[if lt IE 10]>
@@ -27,8 +27,13 @@
 
 
     <div id="container" class="container">
-      <div id="building-selector-panel">
-        <input type="text" id="building-search">
+      <div id="building-selector-panel" class="panel panel-default">
+        <div id="panel-title" class="panel-heading">Waterloo Buildings List</div>
+        <!--<input type="text" id="building-search">-->
+        <input id="building-search" type="text" class="form-control" placeholder="Search for a building">
+        <ul id="building-list-entries" class="list-group">
+
+        </ul>
       </div>
       <div id="map-canvas"></div>
     </div>

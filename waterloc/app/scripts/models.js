@@ -74,7 +74,7 @@ var ModelModule = (function () {
             if (_.indexOf(this.buildings, building) == -1) {
                 building.addListener(self);
                 this.buildings.push(building);
-                this.notify(BUILDING_ADDED);
+                this.notify({'building': building, 'event': BUILDING_ADDED});
             }
         },
         removeBuilding: function (building) {
@@ -82,7 +82,7 @@ var ModelModule = (function () {
             if (index > -1) {
                 this.buildings[index].removeListener(self);
                 this.buildings = _.without(this.buildings, this.buildings[index]);
-                this.notify(BUILDING_REMOVED);
+                this.notify({'building': building, 'event': BUILDING_REMOVED});
             }
         },
         update: function (event) {
