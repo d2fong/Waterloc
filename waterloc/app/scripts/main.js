@@ -69,8 +69,6 @@ var data = {
         };
 
         var appLoop = function() {
-            console.log("HELLO WORLD");
-            console.log(buildingsListModel);
         };
 
         init(appLoop);

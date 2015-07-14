@@ -20,3 +20,29 @@ html, body {
   width: 100%;
   height: 100%;
 }
+
+#building-selector-panel {
+  position: fixed;
+  height: 330px;
+  width: 200px;
+  left: 15%;
+  top: 2.7%;
+  z-index: 3;
+  background: #C9CFC2;
+  opacity: 0.7;
+  outline-width: thin;
+}
+
+#building-search {
+  position: fixed;
+  top: 5%;
+  margin-left: 10px;
+  margin-rigtht: 10px;
+  opacity: 1;
+  width: 180px;
+  outline-width: medium;
+}
+
+.building-entry {
+  
+}

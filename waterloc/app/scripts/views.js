@@ -43,6 +43,7 @@ var ViewModule = (function (BuildingModel) {
         this.setMapModel(model.mapModel);
         this.setBuildingListModel(model.buildingListModel);
         this.setService(UWaterlooService);
+        this.mapMarkers = [];
 
 
     };
@@ -69,7 +70,21 @@ var ViewModule = (function (BuildingModel) {
         },
 
         update: function (event) {
-
+            if (event.event == ModelModule.BUILDING_SHOW) {
+                var latLong = new google.maps.LatLng(event.building.lat, event.building.lng);
+                var marker = new google.maps.Marker({
+                    position: latLong,
+                    map: this.mapModel,
+                    title: building.name
+                });
+                var id = event.building.building_code;
+                this.mapMarkers.push({'id': id, 'marker': marker});
+            } else if (event.event == ModelModule.BUILDING_HIDE) {
+                var m = _.findWhere(this.mapMarkers, {id:event.building.building_code});
+                if (m != undefined) {
+                    this.mapMarkers = _.without(this.mapMarkers, m);
+                }
+            }
         }
     });
 
