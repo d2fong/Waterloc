@@ -30,6 +30,11 @@ var ServiceModule = (function () {
           url: getBuildingListUrl(this.urlPrefix, this.apiKey)
         }).success(function (response) {
           cache.building_list = response['data'];
+
+          _.each(response['data'], function(building) {
+            var code = building['building_code'];
+            cache[code] = building;
+          });
           callback(response['data']);
           return response['data'];
         }).error(function () {
