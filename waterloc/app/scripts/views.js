@@ -42,6 +42,8 @@ var ViewModule = (function (BuildingModel) {
         // update the list of buildings panel and un-highlight the corresponding building
       } else if (event.event == ModelModule.BUILDING_ADDED) {
         this.renderBuilding(event.building);
+      } else if (event.event == ModelModule.BUILDING_FILTER) {
+        this.renderBuildings(event.buildings);
       }
     },
     renderBuilding: function (building) {
@@ -54,15 +56,34 @@ var ViewModule = (function (BuildingModel) {
       var frontCheck = document.createElement('input');
       frontCheck.type = 'checkbox';
       frontCheck.id = building.code;
-      frontCheck.class = 'check';
-      frontCheck.checked = false;
+      if (building.isSelected) {
+        frontCheck.checked = true;
+        entryContainer.className = 'list-group-item building-entry selected';
+      } else {
+        entryContainer.className = 'list-group-item building-entry';
+        frontCheck.checked = false;
+      }
       frontCheck.val = 0;
+      frontCheck.class = 'check';
+
 
       entryContainer.appendChild(frontCheck);
       entryContainer.appendChild(entryLabel);
-      entryContainer.className = 'list-group-item building-entry';
       buildingListElements.appendChild(entryContainer);
+    },
+    renderBuildings: function(buildings) {
+      var panel = this.getBuildingListPanel();
+      while (panel.firstChild) {
+        panel.removeChild(panel.firstChild);
+      }
+      console.log(buildings);
+      if (buildings.length > 0) {
+        for (var i = 0; i < buildings.length; i++) {
+          this.renderBuilding(buildings[i]);
+        }
+      }
     }
+
 
   });
 

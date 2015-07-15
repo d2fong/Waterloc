@@ -37,6 +37,7 @@ var ModelModule = (function () {
     var BUILDING_HIDE = 'BUILDING_HIDE';
     var BUILDING_ADDED = 'BUILDING_ADDED';
     var BUILDING_REMOVED = 'BUILDING_REMOVED';
+    var BUILDING_FILTER = 'BUILDING_FILTER';
 
     var BuildingModel = function (name, id, code, altNames, lat, long) {
         var self = this;
@@ -102,7 +103,18 @@ var ModelModule = (function () {
             }
         },
         update: function (event) {
+          if (event.event == BUILDING_FILTER) {
+            var reg = event.regex;
+            var buildingSubset = [];
+            for (var i = 0; i < this.buildings.length; i++) {
+              if (this.buildings[i].name.match(reg) != null) {
+                buildingSubset.push(this.buildings[i]);
+              }
+            }
+            this.notify({'event': event.event, 'buildings': buildingSubset});
+          } else {
             this.notify(event);
+          }
         },
       getBuilding: function(code) {
         var b = _.findWhere(this.buildings, {'code': code});
@@ -110,7 +122,7 @@ var ModelModule = (function () {
           return null;
         }
         return b;
-      }
+      },
     });
 
     return {
@@ -120,6 +132,7 @@ var ModelModule = (function () {
         BUILDING_SHOW: BUILDING_SHOW,
         BUILDING_HIDE: BUILDING_HIDE,
         BUILDING_ADDED: BUILDING_ADDED,
-        BUILDING_REMOVED: BUILDING_REMOVED
+        BUILDING_REMOVED: BUILDING_REMOVED,
+      BUILDING_FILTER: BUILDING_FILTER
     };
 })();
