@@ -76,7 +76,6 @@ var ViewModule = (function (BuildingModel) {
       while (panel.firstChild) {
         panel.removeChild(panel.firstChild);
       }
-      console.log(buildings);
       if (buildings.length > 0) {
         for (var i = 0; i < buildings.length; i++) {
           this.renderBuilding(buildings[i]);
@@ -121,7 +120,6 @@ var ViewModule = (function (BuildingModel) {
     update: function (event) {
       //console.log(event);
       if (event.event == ModelModule.BUILDING_SHOW) {
-        console.log(event.building.lat, event.building.lng);
         var latLong = new google.maps.LatLng(event.building.lat, event.building.lng);
         var marker = new google.maps.Marker({
           position: latLong,

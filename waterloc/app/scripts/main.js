@@ -84,12 +84,10 @@ var data = {
           regex += char;
         });
         var ret = new RegExp(regex);
-        console.log(regex);
         buildingsListModel.update({event: ModelModule.BUILDING_FILTER, regex: ret});
       };
 
         $('#building-list-entries').on('change', 'input', function() {
-          console.log("SDFDSFSD");
           if ($(this).is(':checked')) {
             $(this).parent()[0].className = 'list-group-item building-entry ' + 'selected';
             var code = $(this).attr('id');
