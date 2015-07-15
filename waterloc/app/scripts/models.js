@@ -11,7 +11,7 @@ var ModelModule = (function () {
 
     _.extend(AbstractModel.prototype, {
         addListener: function (listener) {
-            if (_.indexOf(this.listeners, listener) == -1) {
+            if (_.indexOf(this.listeners, listener) === -1) {
                 this.listeners.push(listener);
             }
         },
@@ -25,9 +25,6 @@ var ModelModule = (function () {
                 // The view will be the primary listener to each graph node, hence we call its update function when this model changes
               listener.update(event);
             });
-        },
-
-        update: function (event) {
         }
     });
 
@@ -40,7 +37,6 @@ var ModelModule = (function () {
     var BUILDING_FILTER = 'BUILDING_FILTER';
 
     var BuildingModel = function (name, id, code, altNames, lat, long) {
-        var self = this;
         this.listeners = [];
         this.name = name;
         this.id = id;
@@ -53,16 +49,16 @@ var ModelModule = (function () {
 
     _.extend(BuildingModel.prototype, {
         update: function (event) {
-          if (event == BUILDING_SHOW) {
+          if (event === BUILDING_SHOW) {
             this.isSelected = true;
             this.notify({'building': this, 'event': BUILDING_SHOW});
-          } else if (event == BUILDING_HIDE) {
+          } else if (event === BUILDING_HIDE) {
             this.isSelected = false;
             this.notify({'building': this, 'event': BUILDING_HIDE});
           }
         },
       addListener: function (listener) {
-        if (_.indexOf(this.listeners, listener) == -1) {
+        if (_.indexOf(this.listeners, listener) === -1) {
           this.listeners.push(listener);
         }
       },
@@ -88,7 +84,7 @@ var ModelModule = (function () {
 
     _.extend(BuildingListModel.prototype, AbstractModel.prototype, {
         addBuilding: function (building) {
-            if (_.indexOf(this.buildings, building) == -1) {
+            if (_.indexOf(this.buildings, building) === -1) {
                 building.addListener(this);
                 this.buildings.push(building);
                 this.notify({'building': building, 'event': BUILDING_ADDED});
@@ -103,11 +99,11 @@ var ModelModule = (function () {
             }
         },
         update: function (event) {
-          if (event.event == BUILDING_FILTER) {
+          if (event.event === BUILDING_FILTER) {
             var reg = event.regex;
             var buildingSubset = [];
             for (var i = 0; i < this.buildings.length; i++) {
-              if (this.buildings[i].name.match(reg) != null) {
+              if (this.buildings[i].name.match(reg) !== null) {
                 buildingSubset.push(this.buildings[i]);
               }
             }

@@ -22,23 +22,23 @@ var ServiceModule = (function () {
 
   _.extend(UWaterlooService.prototype, {
     queryBuildings: function (callback) {
-      if ("building_list" in cache) {
-        return cache['building_list'];
+      if ('building_list' in cache) {
+        return cache.building_list;
       } else {
         $.ajax({
-          method: "GET",
+          method: 'GET',
           url: getBuildingListUrl(this.urlPrefix, this.apiKey)
         }).success(function (response) {
-          cache.building_list = response['data'];
+          cache.building_list = response.data;
 
-          _.each(response['data'], function(building) {
-            var code = building['building_code'];
+          _.each(response.data, function(building) {
+            var code = building.building_code;
             cache[code] = building;
           });
-          callback(response['data']);
-          return response['data'];
+          callback(response.data);
+          return response.data;
         }).error(function () {
-          console.log("ERROR GETTING UW BUILDINGS DATA");
+          console.log('ERROR GETTING UW BUILDINGS DATA');
           return undefined;
         });
       }
@@ -50,14 +50,14 @@ var ServiceModule = (function () {
         return cache[buildingCode];
       } else {
         $.ajax({
-          method: "GET",
+          method: 'GET',
           url: getBuildingCodeUrl(this.urlPrefix, buildingCode, this.apiKey)
         }).success(function (response) {
-          cache.buildingCode = response['data'];
-          callback(response['data']);
+          cache.buildingCode = response.data;
+          callback(response.data);
           return response;
         }).error(function () {
-          console.log("ERROR GETTING UW DATA FOR BUILDING " + buildingCode);
+          console.log('ERROR GETTING UW DATA FOR BUILDING ' + buildingCode);
           return undefined;
         });
       }

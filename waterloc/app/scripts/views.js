@@ -3,7 +3,7 @@
 /* exported ViewModule */
 /* The above comment disables the JSHint warning of ViewModule being defined but not used. */
 
-var ViewModule = (function (BuildingModel) {
+var ViewModule = (function () {
 
   var BuildingListView = function (model, UWaterlooService) {
     this.setModel(model);
@@ -36,13 +36,13 @@ var ViewModule = (function (BuildingModel) {
     },
 
     update: function (event) {
-      if (event.event == ModelModule.BUILDING_SHOW) {
+      if (event.event === ModelModule.BUILDING_SHOW) {
         // update the list of buildings panel and highlight the corresponding building
-      } else if (event.event == ModelModule.BUILDING_HIDE) {
+      } else if (event.event === ModelModule.BUILDING_HIDE) {
         // update the list of buildings panel and un-highlight the corresponding building
-      } else if (event.event == ModelModule.BUILDING_ADDED) {
+      } else if (event.event === ModelModule.BUILDING_ADDED) {
         this.renderBuilding(event.building);
-      } else if (event.event == ModelModule.BUILDING_FILTER) {
+      } else if (event.event === ModelModule.BUILDING_FILTER) {
         this.renderBuildings(event.buildings);
       }
     },
@@ -119,7 +119,7 @@ var ViewModule = (function (BuildingModel) {
 
     update: function (event) {
       //console.log(event);
-      if (event.event == ModelModule.BUILDING_SHOW) {
+      if (event.event === ModelModule.BUILDING_SHOW) {
         var latLong = new google.maps.LatLng(event.building.lat, event.building.lng);
         var marker = new google.maps.Marker({
           position: latLong,
@@ -128,10 +128,10 @@ var ViewModule = (function (BuildingModel) {
         });
         var id = event.building.code;
         this.mapMarkers.push({'id': id, 'marker': marker});
-      } else if (event.event == ModelModule.BUILDING_HIDE) {
+      } else if (event.event === ModelModule.BUILDING_HIDE) {
 
         var m = _.findWhere(this.mapMarkers, {id: event.building.code});
-        if (m != undefined) {
+        if (m !== undefined) {
           m.marker.setMap(null);
           this.mapMarkers = _.without(this.mapMarkers, m);
         }
